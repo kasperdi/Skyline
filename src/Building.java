@@ -10,10 +10,9 @@ public class Building {
         right = r;
     }
 
-
-
-
-
+    public String toString(){
+        return "(" + left + ", " + height + ", " + right + ")";
+    }
 
     // getters and setters
     public void setLeft(int left) {

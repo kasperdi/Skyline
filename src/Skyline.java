@@ -2,14 +2,22 @@ import java.util.*;
 
 public class Skyline {
 
-    private int[] silhouette = new int[]{1,11,3,13,9,0,12,7,16,3,19,18,22,3,23,13,29};
     private ArrayList<Building> buildings;
 
 
     public Skyline(ArrayList<Building> temp){
+        buildings = new ArrayList<>();
         buildings.addAll(temp);
-
     }
+
+    public Skyline(int[] a){
+        buildings = new ArrayList<>();
+        for(int i = 0; i < a.length-2; i+=2){
+            Building temp = new Building(a[i], a[i+1], a[i+2]);
+            buildings.add(temp);
+        }
+    }
+
 
     /**
      *
@@ -19,8 +27,9 @@ public class Skyline {
 
         mergeS();
         mergeS();
-        //Merge();
+       // mergeTwoBuildings(buildings.get(i), buildings.get(j));
     }
+
 
     private void mergeTwoBuildings(Building a, Building b) {
         if (a.getRight() < b.getRight()){
@@ -31,7 +40,7 @@ public class Skyline {
         }
     }
 
-    private void merge(Building a, Building b){
+    private void merge(Building a, Building b){ //helper method
         if (a.getLeft() < b.getRight()){
             if(a.getHeight() > b.getHeight()){
                 b.setRight(a.getLeft());
@@ -58,17 +67,23 @@ public class Skyline {
      */
 
     public void addBuilding(int l, int h, int r) {
-        int[] temp = new int[silhouette.length+1]; //array with all x's
+        Building temp = new Building(l,h,r);
+        int index = 0;
+        int indexFinder = 1;
+        for(Building b : buildings){
 
-        //makes the array
-        for (int i = 0; i <silhouette.length; i+=2){
-            int incrementer = 0;
-            temp[incrementer]= silhouette[i];
-            incrementer++;
+            mergeTwoBuildings(temp,b);
+
+            if(temp.getLeft() == b.getRight()){
+                index = indexFinder;
+            }
+            indexFinder++;
         }
 
-        while(true){
+        buildings.add(index,temp);
 
+        for(Building b : buildings){
+            System.out.println(b.toString());
         }
 
     }
