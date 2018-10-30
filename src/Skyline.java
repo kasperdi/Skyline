@@ -24,7 +24,7 @@ public class Skyline {
      *  using divide and conquer, and then solves the subproblems recursively.
      */
 
-    public int[] findSkyline(Building[] arr, int start, int end) {
+    public int[] findSkyline(int[] arr, int start, int end) {
 
 
         if(start == end) {
@@ -37,6 +37,8 @@ public class Skyline {
         int[] skylineLeft = findSkyline(arr, 0, mid);
         int[] skylineRight = findSkyline(arr, mid+1, arr.length);
         mergeSkylines(skylineLeft, skylineRight);
+
+        return null;
     }
 
     public void mergeSkylines(int[] arr1 , int[] arr2)
@@ -54,6 +56,8 @@ public class Skyline {
         int j = 0;
 
         while(i < arr1.length && j < arr2.length) {
+            //if(arr1.left < arr2.left)
+            //
 
         }
 
