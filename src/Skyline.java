@@ -20,14 +20,46 @@ public class Skyline {
 
 
     /**
-     *
+     *  findSkyline is very similar to mergeSort, in that it splits the problem up into small parts
+     *  using divide and conquer, and then solves the subproblems recursively.
      */
 
-    public void mergeS() {
+    public int[] findSkyline(Building[] arr, int start, int end) {
 
-        mergeS();
-        mergeS();
-       // mergeTwoBuildings(buildings.get(i), buildings.get(j));
+
+        if(start == end) {
+            int[] result = new int[0];
+            return result;
+        }
+
+        int mid = (start+end)/2;
+
+        int[] skylineLeft = findSkyline(arr, 0, mid);
+        int[] skylineRight = findSkyline(arr, mid+1, arr.length);
+        mergeSkylines(skylineLeft, skylineRight);
+    }
+
+    public void mergeSkylines(int[] arr1 , int[] arr2)
+    {
+
+        //Resultant skyline with length being the sum of lengths of original 2 skylines
+        int[] skylineResult = new int[arr1.length + arr2.length];
+
+        //Current height information of 2 arrays
+        int h1 = 0;
+        int h2 = 0;
+
+        //indexes of the two arrays
+        int i = 0;
+        int j = 0;
+
+        while(i < arr1.length && j < arr2.length) {
+
+        }
+
+
+
+        System.out.println(skylineResult);
     }
 
 
@@ -82,9 +114,12 @@ public class Skyline {
 
         buildings.add(index,temp);
 
+        System.out.println("");
+        System.out.print("(");
         for(Building b : buildings){
-            System.out.println(b.toString());
+            System.out.print(b.getLeft() + ", " + b.getHeight() + ", ");
         }
+        System.out.print(")");
 
     }
 }
