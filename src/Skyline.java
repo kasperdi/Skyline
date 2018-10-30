@@ -10,6 +10,11 @@ public class Skyline {
         buildings.addAll(temp);
 
     }
+
+    /**
+     *
+     */
+
     public void MergeS() {
 
         MergeS();
