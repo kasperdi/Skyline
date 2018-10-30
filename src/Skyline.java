@@ -15,15 +15,36 @@ public class Skyline {
      *
      */
 
-    public void MergeS() {
+    public void mergeS() {
 
-        MergeS();
-        MergeS();
-        Merge();
+        mergeS();
+        mergeS();
+        //Merge();
     }
 
-    private void Merge() {
+    private void mergeTwoBuildings(Building a, Building b) {
+        if (a.getRight() < b.getRight()){
+            merge(b,a);
 
+        } else {
+            merge(a,b);
+        }
+    }
+
+    private void merge(Building a, Building b){
+        if (a.getLeft() < b.getRight()){
+            if(a.getHeight() > b.getHeight()){
+                b.setRight(a.getLeft());
+                if(b.getRight()<b.getLeft()){
+                    buildings.remove(b);
+                }
+            } else{
+                a.setLeft(b.getRight());
+                if(a.getRight()<a.getLeft()){
+                    buildings.remove(a);
+                }
+            }
+        }
     }
 
 

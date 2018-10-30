@@ -20,10 +20,6 @@ public class Building {
         this.left = left;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
     public void setRight(int right) {
         this.right = right;
     }
