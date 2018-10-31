@@ -5,11 +5,13 @@ public class Skyline {
     private ArrayList<Building> buildings;
 
 
+    /**
+     * Creates new skyline from input
+     */
     public Skyline(ArrayList<Building> temp){
         buildings = new ArrayList<>();
         buildings.addAll(temp);
     }
-
     public Skyline(int[] a){
         buildings = new ArrayList<>();
         for(int i = 0; i < a.length-2; i+=2){
@@ -61,41 +63,26 @@ public class Skyline {
 
         }
 
-
-
         System.out.println(skylineResult);
     }
 
 
     private void mergeTwoBuildings(Building a, Building b) {
-        if (a.getRight() < b.getRight()){
-            merge(b,a);
-
-        } else {
-            merge(a,b);
+        if (a.getLeft() < b.getLeft() && a.getRight() > b.getLeft()){
+            a.setRight(b.getLeft());
+        } else if (b.getLeft() < a.getLeft() && b.getRight() > a.getLeft()){
+            b.setRight(a.getLeft());
         }
     }
 
-    private void merge(Building a, Building b){ //helper method
-        if (a.getLeft() < b.getRight()){
-            if(a.getHeight() > b.getHeight()){
-                b.setRight(a.getLeft());
-                if(b.getRight()<b.getLeft()){
-                    buildings.remove(b);
-                }
-            } else{
-                a.setLeft(b.getRight());
-                if(a.getRight()<a.getLeft()){
-                    buildings.remove(a);
-                }
-            }
-        }
-    }
+
+
+
 
 
 
     /**
-     * Opgave a
+     * Opgave a - unnecessary after method: merge skyline
      *
      * @param l - venstre
      * @param h - hoejde
@@ -118,12 +105,17 @@ public class Skyline {
 
         buildings.add(index,temp);
 
+        for(Building b : buildings){
+            System.out.println(b.toString());
+        }
+
+        /*
         System.out.println("");
         System.out.print("(");
         for(Building b : buildings){
             System.out.print(b.getLeft() + ", " + b.getHeight() + ", ");
         }
         System.out.print(")");
-
+        */
     }
 }
