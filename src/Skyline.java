@@ -5,6 +5,7 @@ public class Skyline {
     private ArrayList<Building> buildings;
 
 
+
     /**
      * Creates new skyline from input
      */
