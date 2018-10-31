@@ -69,9 +69,17 @@ public class Skyline {
 
     private void mergeTwoBuildings(Building a, Building b) {
         if (a.getLeft() < b.getLeft() && a.getRight() > b.getLeft()){
-            a.setRight(b.getLeft());
+            if (a.getHeight() < b.getHeight()){
+                a.setRight(b.getLeft());
+            } else {
+                b.setLeft(a.getRight());
+            }
         } else if (b.getLeft() < a.getLeft() && b.getRight() > a.getLeft()){
-            b.setRight(a.getLeft());
+            if (b.getHeight() < a.getHeight()){
+                b.setRight(a.getLeft());
+            } else {
+                a.setLeft(b.getRight());
+            }
         }
     }
 
@@ -118,4 +126,17 @@ public class Skyline {
         System.out.print(")");
         */
     }
+
+
+    private ArrayList<Building> ArrayToBuilding(int[] a){
+       // ArrayList<Building>
+        for(int i = 0; i < a.length-2; i+=2){
+            Building temp = new Building(a[i], a[i+1], a[i+2]);
+            buildings.add(temp);
+        }
+
+
+        return null;
+    }
+
 }
