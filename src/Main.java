@@ -6,5 +6,7 @@ public class Main {
        Skyline sk = new Skyline(silhouette);
        sk.addBuilding(14, 6, 17);
 
+       //sk.findSkyline()
+
     }
 }
