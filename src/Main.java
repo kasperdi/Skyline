@@ -1,12 +1,23 @@
+
 public class Main {
     public static void main(String args[]) {
 
-        int[] silhouette = new int[]{1,11,3,13,9,0,12,7,16,3,19,18,22,3,23,13,29};
+        Building[] b = new Building[8];
 
-       Skyline sk = new Skyline(silhouette);
-       sk.addBuilding(14, 6, 17);
+        b[0] = new Building(1,11,5);
+        b[1] = new Building(2,6,7);
+        b[2] = new Building(3,13,9);
+        b[3] = new Building(12,7,16);
+        b[4] = new Building(14,3,25);
+        b[5] = new Building(19,18,22);
+        b[6] = new Building(23,13,29);
+        b[7] = new Building(24,4,28);
 
-       //sk.findSkyline()
+        Skyline sl = new Skyline(b);
+
+        sl.updateBuildings();
+
+
 
     }
 }

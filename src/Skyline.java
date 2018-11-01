@@ -2,85 +2,146 @@ import java.util.*;
 
 public class Skyline {
 
-    private ArrayList<Building> buildings;
+    private Building[] buildings;
 
 
 
     /**
      * Creates new skyline from input
      */
-    public Skyline(ArrayList<Building> temp) {
-        buildings = new ArrayList<>();
-        buildings.addAll(temp);
+
+    public Skyline(Building[] a) {
+       buildings = a;
     }
 
-    public Skyline(int[] a) {
-        buildings = new ArrayList<>();
-        for (int i = 0; i < a.length - 2; i += 2) {
-            Building temp = new Building(a[i], a[i + 1], a[i + 2]);
-            buildings.add(temp);
-        }
+
+    public void updateBuildings(){
+        buildings = findSkyline2(buildings, 0, buildings.length-1);
     }
 
 
     /**
-     * findSkyline is very similar to mergeSort, in that it splits the problem up into small parts
-     * using divide and conquer, and then solves the subproblems recursively.
+     * Finds the skyline of a given Building array
+     *
+     * @param buildingArray - An array of Buildings
+     * @return - Returns a Building array representing the skyline
      */
 
-    public Building[] findSkyline(Building[] arr, int start, int end) {
 
+    public Building[] findSkyline(Building[] buildingArray) {
 
-        if (start == end) {
-            Building[] result = new Building[0];
-            return result;
+        int length = buildingArray.length;
+
+        /*
+            We are on the lowest layer: only a single building is contained in our array.
+            We therefore return the building as a skyline
+        */
+
+        if (length == 1) {
+            Building[] skylineBuilding = new Building[2];
+            skylineBuilding[0] = new Building(buildingArray[0].getLeft(), buildingArray[0].getHeight()); //building start and height
+            skylineBuilding[1] = new Building(buildingArray[0].getRight(), 0); //building end
+            return skylineBuilding;
         }
 
-        int mid = (start + end) / 2;
+        //Calls recursively on the first half of the buildings
+        Building[] skylineLeft = findSkyline(Arrays.copyOfRange(buildingArray, 0, length / 2));
+        //calls recursively on the second half
+        Building[] skylineRight = findSkyline(Arrays.copyOfRange(buildingArray, length / 2, length));
 
-        Building[] skylineLeft = findSkyline(arr, 0, mid);
-        Building[] skylineRight = findSkyline(arr, mid + 1, arr.length);
-        mergeSkylines(skylineLeft, skylineRight);
-
-        return null;
+        return mergeSkylines(skylineLeft, skylineRight);
     }
 
-    public void mergeSkylines(Building[] arr1, Building[] arr2) {
+    public Building[] findSkyline2(Building[] buildingArray,int p, int q) {
+
+        int mid = (p+q)/2;
+        int length = buildingArray.length;
+
+        /*
+            We are on the lowest layer: only a single building is contained in our array.
+            We therefore return the building as a skyline
+        */
+
+        if (p == q) {
+            Building[] skylineBuilding = new Building[2];
+            skylineBuilding[0] = new Building(buildingArray[0].getLeft(), buildingArray[0].getHeight()); //building start and height
+            skylineBuilding[1] = new Building(buildingArray[0].getRight(), 0); //building end
+            return skylineBuilding;
+        }
+
+        //Calls recursively on the first half of the buildings
+        Building[] skylineLeft = findSkyline2(buildingArray, p, mid);
+        //calls recursively on the second half
+        Building[] skylineRight = findSkyline2(buildingArray, mid+1, q);
+
+        return mergeSkylines(skylineLeft, skylineRight);
+    }
+
+
+    /**
+     * Opg b : merges two skylines
+     * @param skyline1 - skyline 1
+     * @param skyline2 - skyline 2
+     */
+
+    private Building[] mergeSkylines(Building[] skyline1, Building[] skyline2) {
 
         //Resultant skyline with length being the sum of lengths of original 2 skylines
-        int[] skylineResult = new int[arr1.length + arr2.length];
+        Building[] skylineResult = new Building[skyline1.length + skyline2.length];
 
         //Current height information of 2 arrays
-        int h1 = 0;
-        int h2 = 0;
+        int currentHeight1 = 0;
+        int currentHeight2 = 0;
+        int Currentx;
 
         //indexes of the two arrays
         int i = 0;
         int j = 0;
 
-        while (i < arr1.length && j < arr2.length) {
-            if (arr1[i].getLeft() < arr2[j].getLeft()) {
-                int x1 = arr1[i].getLeft();
-                h1 = arr1[i].getHeight();
+        int slIndex = 0;
 
-                int currentHeight = Math.max(arr1[i].getHeight(), arr1[j].getHeight());
+        //Merges the two skylines mergessort-style
+        while (i < skyline1.length && j < skyline2.length) {
+            if (skyline1[i].getLeft() < skyline2[j].getLeft()) {
+
+                Currentx = skyline1[i].getLeft();
+                currentHeight1 = skyline1[i].getHeight();
+
+                skylineResult[slIndex] = new Building(Currentx, Math.max(currentHeight1,currentHeight2));
                 i++;
 
             } else {
 
-                int x2 = arr1[j].getLeft();
-                h2 = arr1[j].getHeight();
+                Currentx = skyline2[j].getLeft();
+                currentHeight2 = skyline2[j].getHeight();
 
-                int currentHeight = Math.max(arr1[i].getHeight(), arr1[j].getHeight());
+                skylineResult[slIndex] = new Building(Currentx, Math.max(currentHeight1,currentHeight2));
                 j++;
-
             }
-
-
         }
 
-        System.out.println(skylineResult);
+        // adds remaining buildings from the other skyline.
+        if (i < skyline1.length) {
+            while (i < skyline1.length) {
+                skylineResult[slIndex] = skyline1[i];
+                i++;
+                slIndex++;
+            }
+        } else if (j < skyline2.length) {
+            while (j < skyline2.length) {
+                skylineResult[slIndex] = skyline2[j];
+                j++;
+                slIndex++;
+            }
+        }
+        return skylineResult;
     }
+
+
+
+
+
+
 
 
     private void mergeTwoBuildings(Building a, Building b) {
@@ -102,12 +163,8 @@ public class Skyline {
 
     /**
      * Opgave a - unnecessary after method: merge skyline
-     *
-     * @param l - venstre
-     * @param h - hoejde
-     * @param r - hoejre
      */
-
+    /*
     public void addBuilding(int l, int h, int r) {
         Building temp = new Building(l, h, r);
         int index = 0;
@@ -125,29 +182,27 @@ public class Skyline {
         buildings.add(index, temp);
 
         for (Building b : buildings) {
-            System.out.println(b.toString());
+            System.out.println(b.toStringAlternative());
         }
 
-        /*
+
         System.out.println("");
         System.out.print("(");
         for(Building b : buildings){
             System.out.print(b.getLeft() + ", " + b.getHeight() + ", ");
         }
         System.out.print(")");
-        */
+
     }
+*/
 
+    private ArrayList<Building> ArrayToBuilding(int[] a){
+        ArrayList<Building> temp = new ArrayList<>();
 
-    private ArrayList<Building> ArrayToBuilding(int[] a) {
-        // ArrayList<Building>
-        for (int i = 0; i < a.length - 2; i += 2) {
-            Building temp = new Building(a[i], a[i + 1], a[i + 2]);
-            buildings.add(temp);
+        for(int i = 0; i < a.length-2; i+=2){
+            Building build = new Building(a[i], a[i+1], a[i+2]);
+            temp.add(build);
         }
-
-
-        return null;
+        return temp;
     }
-
 }

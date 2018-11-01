@@ -10,7 +10,17 @@ public class Building {
         right = r;
     }
 
+    public Building(int l,int h){
+        left = l;
+        height = h;
+    }
+
+
     public String toString(){
+        return "(" + left + ", " + height + ")";
+    }
+
+    public String toStringAlternative(){
         return "(" + left + ", " + height + ", " + right + ")";
     }
 
