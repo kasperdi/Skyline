@@ -16,7 +16,7 @@ public class Skyline {
 
 
     public void updateBuildings(){
-        buildings = findSkyline2(buildings, 0, buildings.length-1);
+        buildings = findSkyline(buildings, 0, buildings.length-1);
         buildings = removeRedundant(buildings);
 
     }
@@ -51,32 +51,7 @@ public class Skyline {
      * @return - Returns a Building array representing the skyline
      */
 
-
-    public Building[] findSkyline(Building[] buildingArray) {
-
-        int length = buildingArray.length;
-
-        /*
-            We are on the lowest layer: only a single building is contained in our array.
-            We therefore return the building as a skyline
-        */
-
-        if (length == 1) {
-            Building[] skylineBuilding = new Building[2];
-            skylineBuilding[0] = new Building(buildingArray[0].getLeft(), buildingArray[0].getHeight()); //building start and height
-            skylineBuilding[1] = new Building(buildingArray[0].getRight(), 0); //building end
-            return skylineBuilding;
-        }
-
-        //Calls recursively on the first half of the buildings
-        Building[] skylineLeft = findSkyline(Arrays.copyOfRange(buildingArray, 0, length / 2));
-        //calls recursively on the second half
-        Building[] skylineRight = findSkyline(Arrays.copyOfRange(buildingArray, length / 2+1, length));
-
-        return mergeSkylines(skylineLeft, skylineRight);
-    }
-
-    public Building[] findSkyline2(Building[] buildingArray,int p, int q) {
+    public Building[] findSkyline(Building[] buildingArray,int p, int q) {
 
         int mid = (p+q)/2;
         int length = buildingArray.length;
@@ -94,9 +69,9 @@ public class Skyline {
         }
 
         //Calls recursively on the first half of the buildings
-        Building[] skylineLeft = findSkyline2(buildingArray, p, mid);
+        Building[] skylineLeft = findSkyline(buildingArray, p, mid);
         //calls recursively on the second half
-        Building[] skylineRight = findSkyline2(buildingArray, mid+1, q);
+        Building[] skylineRight = findSkyline(buildingArray, mid+1, q);
 
         return mergeSkylines(skylineLeft, skylineRight);
     }
