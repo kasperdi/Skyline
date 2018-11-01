@@ -4,8 +4,6 @@ public class Skyline {
 
     private Building[] buildings;
 
-
-
     /**
      * Creates new skyline from input
      */
@@ -14,14 +12,12 @@ public class Skyline {
         buildings = a;
     }
 
-
-    public void updateBuildings(){
-        buildings = findSkyline(buildings, 0, buildings.length-1);
+    public void updateBuildings() {
+        buildings = findSkyline(buildings, 0, buildings.length - 1);
         buildings = removeRedundant(buildings);
-
     }
 
-    private Building[] removeRedundant(Building[] a){
+    private Building[] removeRedundant(Building[] a) {
         int amountRemoved = 0;
 
         ArrayList<Building> buildArray = new ArrayList<>();
@@ -29,38 +25,32 @@ public class Skyline {
         buildArray.addAll(Arrays.asList(a));
 
         //Removes redundant buildings
-        for(int i = buildArray.size()-1; i > 0; i--){
-            if(buildArray.get(i).getHeight() == buildArray.get(i-1).getHeight()){
+        for (int i = buildArray.size() - 1; i > 0; i--) {
+            if (buildArray.get(i).getHeight() == buildArray.get(i - 1).getHeight()) {
                 buildArray.remove(i);
                 amountRemoved++;
             }
         }
 
-        return buildArray.toArray(new Building[a.length-amountRemoved]);
+        return buildArray.toArray(new Building[a.length - amountRemoved]);
     }
-
-    public Building[] getBuildings() {
-        return buildings;
-    }
-
 
     /**
-     * Finds the skyline of a given Building array
+     * Opg c: Finds the skyline of a given building array
      *
      * @param buildingArray - An array of Buildings
      * @return - Returns a Building array representing the skyline
      */
 
-    public Building[] findSkyline(Building[] buildingArray,int p, int q) {
+    public Building[] findSkyline(Building[] buildingArray, int p, int q) {
 
-        int mid = (p+q)/2;
+        int mid = (p + q) / 2;
         int length = buildingArray.length;
 
         /*
             We are on the lowest layer: only a single building is contained in our array.
             We therefore return the building as a skyline
         */
-
         if (p == q) {
             Building[] skylineBuilding = new Building[2];
             skylineBuilding[0] = new Building(buildingArray[p].getLeft(), buildingArray[p].getHeight()); //building start and height
@@ -71,14 +61,15 @@ public class Skyline {
         //Calls recursively on the first half of the buildings
         Building[] skylineLeft = findSkyline(buildingArray, p, mid);
         //calls recursively on the second half
-        Building[] skylineRight = findSkyline(buildingArray, mid+1, q);
+        Building[] skylineRight = findSkyline(buildingArray, mid + 1, q);
 
         return mergeSkylines(skylineLeft, skylineRight);
     }
 
 
     /**
-     * Opg b : merges two skylines
+     * opg b: Merges two skylines.
+     *
      * @param skyline1 - skyline 1
      * @param skyline2 - skyline 2
      */
@@ -136,66 +127,11 @@ public class Skyline {
         return skylineResult;
     }
 
-
-    private void mergeTwoBuildings(Building a, Building b) {
-        if (a.getLeft() < b.getLeft() && a.getRight() > b.getLeft()) {
-            if (a.getHeight() < b.getHeight()) {
-                a.setRight(b.getLeft());
-            } else {
-                b.setLeft(a.getRight());
-            }
-        } else if (b.getLeft() < a.getLeft() && b.getRight() > a.getLeft()) {
-            if (b.getHeight() < a.getHeight()) {
-                b.setRight(a.getLeft());
-            } else {
-                a.setLeft(b.getRight());
-            }
-        }
-    }
-
-
     /**
-     * Opgave a - unnecessary after method: merge skyline
+     * getter method for buildings array
+     * @return Building[]
      */
-    /*
-    public void addBuilding(int l, int h, int r) {
-        Building temp = new Building(l, h, r);
-        int index = 0;
-        int indexFinder = 1;
-        for (Building b : buildings) {
-
-            mergeTwoBuildings(temp, b);
-
-            if (temp.getLeft() == b.getRight()) {
-                index = indexFinder;
-            }
-            indexFinder++;
-        }
-
-        buildings.add(index, temp);
-
-        for (Building b : buildings) {
-            System.out.println(b.toStringAlternative());
-        }
-
-
-        System.out.println("");
-        System.out.print("(");
-        for(Building b : buildings){
-            System.out.print(b.getLeft() + ", " + b.getHeight() + ", ");
-        }
-        System.out.print(")");
-
-    }
-*/
-
-    private ArrayList<Building> ArrayToBuilding(int[] a){
-        ArrayList<Building> temp = new ArrayList<>();
-
-        for(int i = 0; i < a.length-2; i+=2){
-            Building build = new Building(a[i], a[i+1], a[i+2]);
-            temp.add(build);
-        }
-        return temp;
+    public Building[] getBuildings() {
+        return buildings;
     }
 }
