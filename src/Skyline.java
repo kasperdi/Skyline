@@ -11,12 +11,32 @@ public class Skyline {
      */
 
     public Skyline(Building[] a) {
-       buildings = a;
+        buildings = a;
     }
 
 
     public void updateBuildings(){
         buildings = findSkyline2(buildings, 0, buildings.length-1);
+        buildings = removeRedundant(buildings);
+
+    }
+
+    private Building[] removeRedundant(Building[] a){
+        int amountRemoved = 0;
+
+        ArrayList<Building> buildArray = new ArrayList<>();
+
+        buildArray.addAll(Arrays.asList(a));
+
+        //Removes redundant buildings
+        for(int i = buildArray.size()-1; i > 0; i--){
+            if(buildArray.get(i).getHeight() == buildArray.get(i-1).getHeight()){
+                buildArray.remove(i);
+                amountRemoved++;
+            }
+        }
+
+        return buildArray.toArray(new Building[a.length-amountRemoved]);
     }
 
     public Building[] getBuildings() {
@@ -110,19 +130,17 @@ public class Skyline {
 
                 Currentx = skyline1[i].getLeft();
                 currentHeight1 = skyline1[i].getHeight();
-
-                skylineResult[slIndex] = new Building(Currentx, Math.max(currentHeight1,currentHeight2));
-                i++;
+                skylineResult[slIndex] = new Building(Currentx, Math.max(currentHeight1, currentHeight2));
                 slIndex++;
+                i++;
 
             } else {
 
                 Currentx = skyline2[j].getLeft();
                 currentHeight2 = skyline2[j].getHeight();
-
-                skylineResult[slIndex] = new Building(Currentx, Math.max(currentHeight1,currentHeight2));
-                j++;
+                skylineResult[slIndex] = new Building(Currentx, Math.max(currentHeight1, currentHeight2));
                 slIndex++;
+                j++;
             }
         }
 
@@ -140,10 +158,8 @@ public class Skyline {
                 slIndex++;
             }
         }
-
         return skylineResult;
     }
-
 
 
     private void mergeTwoBuildings(Building a, Building b) {

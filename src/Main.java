@@ -16,13 +16,18 @@ public class Main {
 
         Skyline sl = new Skyline(b);
 
-        System.out.println(Arrays.toString(sl.getBuildings()));
+        System.out.println("Input");
+        for(Building build : sl.getBuildings()){
+            System.out.print(build.toStringAlternative());
+        }
+        System.out.println();
 
         sl.updateBuildings();
 
+        System.out.println("Solution");
+        System.out.println("(1, 11), (3, 13), (9,0) (12, 7), (16, 3), (19, 18), (22, 3), (23, 13), (29, 0)");
+        System.out.println("Answer");
         System.out.println(Arrays.toString(sl.getBuildings()));
-
-
 
     }
 }

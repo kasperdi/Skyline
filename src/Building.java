@@ -21,7 +21,7 @@ public class Building {
     }
 
     public String toStringAlternative(){
-        return "(" + left + ", " + height + ", " + right + ")";
+        return "(" + left + ", " + height + ", " + right + ") ";
     }
 
     // getters and setters
