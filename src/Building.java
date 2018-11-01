@@ -15,7 +15,6 @@ public class Building {
         height = h;
     }
 
-
     public String toString(){
         return "(" + left + ", " + height + ")";
     }
@@ -25,14 +24,6 @@ public class Building {
     }
 
     // getters and setters
-    public void setLeft(int left) {
-        this.left = left;
-    }
-
-    public void setRight(int right) {
-        this.right = right;
-    }
-
     public int getLeft() {
         return left;
     }

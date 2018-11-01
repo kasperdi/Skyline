@@ -7,7 +7,6 @@ public class Skyline {
     /**
      * Creates new skyline from input
      */
-
     public Skyline(Building[] a) {
         buildings = a;
     }
@@ -17,6 +16,11 @@ public class Skyline {
         buildings = removeRedundant(buildings);
     }
 
+    /**
+     * Removes all buildings that are the same height as the previous building.
+     * @param a - building array
+     * @return Building[] - Returns a building array without redundant buildings.
+     */
     private Building[] removeRedundant(Building[] a) {
         int amountRemoved = 0;
 
@@ -31,12 +35,11 @@ public class Skyline {
                 amountRemoved++;
             }
         }
-
         return buildArray.toArray(new Building[a.length - amountRemoved]);
     }
 
     /**
-     * Opg c: Finds the skyline of a given building array
+     * Opgave c: Finds the skyline of a given building array
      *
      * @param buildingArray - An array of Buildings
      * @return - Returns a Building array representing the skyline
@@ -44,8 +47,8 @@ public class Skyline {
 
     public Building[] findSkyline(Building[] buildingArray, int p, int q) {
 
+        //Calculates the middle of the building array
         int mid = (p + q) / 2;
-        int length = buildingArray.length;
 
         /*
             We are on the lowest layer: only a single building is contained in our array.
@@ -68,10 +71,11 @@ public class Skyline {
 
 
     /**
-     * opg b: Merges two skylines.
+     * Opgave b: Merges two skylines
      *
-     * @param skyline1 - skyline 1
-     * @param skyline2 - skyline 2
+     * @param skyline1 - Skyline 1
+     * @param skyline2 - Skyline 2
+     * @return Building[] - returns the resultant building array.
      */
 
     private Building[] mergeSkylines(Building[] skyline1, Building[] skyline2) {
@@ -82,29 +86,24 @@ public class Skyline {
         //Current height information of 2 arrays
         int currentHeight1 = 0;
         int currentHeight2 = 0;
-        int Currentx = 0;
 
         //indexes of the two arrays
         int i = 0;
         int j = 0;
 
+        //index of the resultant skyline
         int slIndex = 0;
 
         //Merges the two skylines mergesort-style
         while (i < skyline1.length && j < skyline2.length) {
             if (skyline1[i].getLeft() < skyline2[j].getLeft()) {
-
-                Currentx = skyline1[i].getLeft();
                 currentHeight1 = skyline1[i].getHeight();
-                skylineResult[slIndex] = new Building(Currentx, Math.max(currentHeight1, currentHeight2));
+                skylineResult[slIndex] = new Building(skyline1[i].getLeft(), Math.max(currentHeight1, currentHeight2));
                 slIndex++;
                 i++;
-
             } else {
-
-                Currentx = skyline2[j].getLeft();
                 currentHeight2 = skyline2[j].getHeight();
-                skylineResult[slIndex] = new Building(Currentx, Math.max(currentHeight1, currentHeight2));
+                skylineResult[slIndex] = new Building(skyline2[j].getLeft(), Math.max(currentHeight1, currentHeight2));
                 slIndex++;
                 j++;
             }

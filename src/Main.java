@@ -28,6 +28,5 @@ public class Main {
         System.out.println("(1, 11), (3, 13), (9,0) (12, 7), (16, 3), (19, 18), (22, 3), (23, 13), (29, 0)");
         System.out.println("Answer");
         System.out.println(Arrays.toString(sl.getBuildings()));
-
     }
 }
