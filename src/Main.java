@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Main {
     public static void main(String args[]) {
@@ -15,7 +16,11 @@ public class Main {
 
         Skyline sl = new Skyline(b);
 
+        System.out.println(Arrays.toString(sl.getBuildings()));
+
         sl.updateBuildings();
+
+        System.out.println(Arrays.toString(sl.getBuildings()));
 
 
 

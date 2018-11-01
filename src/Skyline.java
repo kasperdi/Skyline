@@ -19,6 +19,10 @@ public class Skyline {
         buildings = findSkyline2(buildings, 0, buildings.length-1);
     }
 
+    public Building[] getBuildings() {
+        return buildings;
+    }
+
 
     /**
      * Finds the skyline of a given Building array
@@ -47,7 +51,7 @@ public class Skyline {
         //Calls recursively on the first half of the buildings
         Building[] skylineLeft = findSkyline(Arrays.copyOfRange(buildingArray, 0, length / 2));
         //calls recursively on the second half
-        Building[] skylineRight = findSkyline(Arrays.copyOfRange(buildingArray, length / 2, length));
+        Building[] skylineRight = findSkyline(Arrays.copyOfRange(buildingArray, length / 2+1, length));
 
         return mergeSkylines(skylineLeft, skylineRight);
     }
@@ -64,8 +68,8 @@ public class Skyline {
 
         if (p == q) {
             Building[] skylineBuilding = new Building[2];
-            skylineBuilding[0] = new Building(buildingArray[0].getLeft(), buildingArray[0].getHeight()); //building start and height
-            skylineBuilding[1] = new Building(buildingArray[0].getRight(), 0); //building end
+            skylineBuilding[0] = new Building(buildingArray[p].getLeft(), buildingArray[p].getHeight()); //building start and height
+            skylineBuilding[1] = new Building(buildingArray[p].getRight(), 0); //building end
             return skylineBuilding;
         }
 
@@ -92,7 +96,7 @@ public class Skyline {
         //Current height information of 2 arrays
         int currentHeight1 = 0;
         int currentHeight2 = 0;
-        int Currentx;
+        int Currentx = 0;
 
         //indexes of the two arrays
         int i = 0;
@@ -100,7 +104,7 @@ public class Skyline {
 
         int slIndex = 0;
 
-        //Merges the two skylines mergessort-style
+        //Merges the two skylines mergesort-style
         while (i < skyline1.length && j < skyline2.length) {
             if (skyline1[i].getLeft() < skyline2[j].getLeft()) {
 
@@ -134,6 +138,7 @@ public class Skyline {
                 slIndex++;
             }
         }
+
         return skylineResult;
     }
 
