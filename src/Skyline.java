@@ -113,6 +113,7 @@ public class Skyline {
 
                 skylineResult[slIndex] = new Building(Currentx, Math.max(currentHeight1,currentHeight2));
                 i++;
+                slIndex++;
 
             } else {
 
@@ -121,6 +122,7 @@ public class Skyline {
 
                 skylineResult[slIndex] = new Building(Currentx, Math.max(currentHeight1,currentHeight2));
                 j++;
+                slIndex++;
             }
         }
 
@@ -141,11 +143,6 @@ public class Skyline {
 
         return skylineResult;
     }
-
-
-
-
-
 
 
 
